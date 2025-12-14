@@ -5816,6 +5816,7 @@ tile.machine_purex.desc=Reprocessing machine for many nuclear fuels.$Most recipe
 tile.machine_pyrooven.name=Pyrolysis Oven
 tile.machine_radar.name=Radar
 tile.machine_radar_large.name=Large Radar
+tile.machine_radar_p35.name=P-35 Long-Range Radar
 tile.machine_radgen.name=Radiation-Powered Engine
 tile.machine_radiolysis.name=Radioisotope Thermoelectric Generator and Radiolysis Chamber
 tile.machine_reactor.name=Breeding Reactor

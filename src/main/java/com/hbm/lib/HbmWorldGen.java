@@ -305,11 +305,8 @@ public class HbmWorldGen implements IWorldGenerator {
 
 					if(world.getBlock(x, g - 1, z).canPlaceTorchOnTop(world, x, g - 1, z)) {
 						world.setBlock(x, g, z, ModBlocks.mine_ap);
-						TileEntity tile = world.getTileEntity(x, g, z);
-						if(tile instanceof TileEntityLandmine) {
-							TileEntityLandmine landmine = (TileEntityLandmine) tile;
-							landmine.waitingForPlayer = true;
-						}
+						TileEntityLandmine landmine = (TileEntityLandmine) world.getTileEntity(x, g, z);
+						landmine.waitingForPlayer = true;
 						if(GeneralConfig.enableDebugMode) MainRegistry.logger.info("[Debug] Successfully spawned landmine at " + x + " " + g + " " + z);
 						break;
 					}
@@ -326,11 +323,8 @@ public class HbmWorldGen implements IWorldGenerator {
 					world.setBlock(x, y, z, ModBlocks.lantern_behemoth, 12, 3);
 					MultiblockHandlerXR.fillSpace(world, x, y, z, new int[] {4, 0, 0, 0, 0, 0}, ModBlocks.lantern_behemoth, ForgeDirection.NORTH);
 
-					TileEntity tile = world.getTileEntity(x, y, z);
-					if(tile instanceof TileEntityLanternBehemoth) {
-						TileEntityLanternBehemoth lantern = (TileEntityLanternBehemoth) tile;
-						lantern.isBroken = true;
-					}
+					TileEntityLanternBehemoth lantern = (TileEntityLanternBehemoth) world.getTileEntity(x, y, z);
+					lantern.isBroken = true;
 
 					if(rand.nextInt(2) == 0) {
 						LootGenerator.setBlock(world, x, y, z - 2);
@@ -348,11 +342,8 @@ public class HbmWorldGen implements IWorldGenerator {
 				int y = world.getHeightValue(x, z);
 				if(world.getBlock(x, y - 1, z).canPlaceTorchOnTop(world, x, y - 1, z)) {
 					world.setBlock(x, y, z, ModBlocks.mine_he);
-					TileEntity tile = world.getTileEntity(x, y, z);
-					if(tile instanceof TileEntityLandmine) {
-						TileEntityLandmine landmine = (TileEntityLandmine) tile;
-						landmine.waitingForPlayer = true;
-					}
+					TileEntityLandmine landmine = (TileEntityLandmine) world.getTileEntity(x, y, z);
+					landmine.waitingForPlayer = true;
 				}
 			}
 
@@ -382,10 +373,10 @@ public class HbmWorldGen implements IWorldGenerator {
 				if(world.getBlock(x, y + 1, z).canPlaceTorchOnTop(world, x, y + 1, z)) {
 
 					world.setBlock(x, y, z, ModBlocks.soyuz_capsule, 3, 2);
-					TileEntity tile = world.getTileEntity(x, y, z);
-					
-					if(tile instanceof TileEntitySoyuzCapsule) {
-						TileEntitySoyuzCapsule cap = (TileEntitySoyuzCapsule) tile;
+
+					TileEntitySoyuzCapsule cap = (TileEntitySoyuzCapsule)world.getTileEntity(x, y, z);
+
+					if(cap != null) {
 						cap.setInventorySlotContents(rand.nextInt(cap.getSizeInventory()), new ItemStack(ModItems.record_glass));
 					}
 
@@ -429,35 +420,32 @@ public class HbmWorldGen implements IWorldGenerator {
 
 				if(world.getBlock(x, y - 1, z).canPlaceTorchOnTop(world, x, y - 1, z)) {
 					world.setBlock(x, y, z, ModBlocks.safe, rand.nextInt(4) + 2, 2);
-					
-					TileEntity tile = world.getTileEntity(x, y, z);
-					if(tile instanceof TileEntitySafe) {
-						TileEntitySafe safe = (TileEntitySafe) tile;
-	
-						switch(rand.nextInt(10)) {
-						case 0: case 1: case 2: case 3:
-							safe.setMod(1);
-							WeightedRandomChestContent.generateChestContents(rand, ItemPool.getPool(ItemPoolsSingle.POOL_VAULT_RUSTY), safe, rand.nextInt(4) + 3);
-							break;
-						case 4: case 5: case 6:
-							safe.setMod(0.1);
-							WeightedRandomChestContent.generateChestContents(rand, ItemPool.getPool(ItemPoolsSingle.POOL_VAULT_STANDARD), safe, rand.nextInt(3) + 2);
-							break;
-						case 7: case 8:
-							safe.setMod(0.02);
-							WeightedRandomChestContent.generateChestContents(rand, ItemPool.getPool(ItemPoolsSingle.POOL_VAULT_REINFORCED), safe, rand.nextInt(3) + 1);
-							break;
-						case 9:
-							safe.setMod(0.0);
-							WeightedRandomChestContent.generateChestContents(rand, ItemPool.getPool(ItemPoolsSingle.POOL_VAULT_UNBREAKABLE), safe, rand.nextInt(2) + 1);
-							break;
-						}
-	
-						safe.setPins(rand.nextInt(999) + 1);
-						safe.lock();
-	
-						if(rand.nextInt(10) < 3) safe.fillWithSpiders(); // 30% chance; those safes have been sitting there for ages, they gotta have some spiders in them
+					TileEntitySafe safe = (TileEntitySafe) world.getTileEntity(x, y, z);
+
+					switch(rand.nextInt(10)) {
+					case 0: case 1: case 2: case 3:
+						safe.setMod(1);
+						WeightedRandomChestContent.generateChestContents(rand, ItemPool.getPool(ItemPoolsSingle.POOL_VAULT_RUSTY), safe, rand.nextInt(4) + 3);
+						break;
+					case 4: case 5: case 6:
+						safe.setMod(0.1);
+						WeightedRandomChestContent.generateChestContents(rand, ItemPool.getPool(ItemPoolsSingle.POOL_VAULT_STANDARD), safe, rand.nextInt(3) + 2);
+						break;
+					case 7: case 8:
+						safe.setMod(0.02);
+						WeightedRandomChestContent.generateChestContents(rand, ItemPool.getPool(ItemPoolsSingle.POOL_VAULT_REINFORCED), safe, rand.nextInt(3) + 1);
+						break;
+					case 9:
+						safe.setMod(0.0);
+						WeightedRandomChestContent.generateChestContents(rand, ItemPool.getPool(ItemPoolsSingle.POOL_VAULT_UNBREAKABLE), safe, rand.nextInt(2) + 1);
+						break;
 					}
+
+					safe.setPins(rand.nextInt(999) + 1);
+					safe.lock();
+
+					if(rand.nextInt(10) < 3) // 30% chance; those safes have been sitting there for ages, they gotta have some spiders in them
+						safe.fillWithSpiders();
 
 					if(GeneralConfig.enableDebugMode)
 						MainRegistry.logger.info("[Debug] Successfully spawned safe at " + x + " " + (y + 1) +" " + z);
