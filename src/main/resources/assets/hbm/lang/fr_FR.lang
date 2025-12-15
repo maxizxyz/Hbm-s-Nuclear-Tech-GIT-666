@@ -1208,6 +1208,7 @@ item.designator_manual.name=Désignateur manuel
 item.missile_assembly.name=Petit assemblage de missile
 item.missile_generic.name=Missile explosif Tier1
 item.missile_anti_ballistic.name=Missile anti-balistique (WIP)
+item.missile_abm2.name=Missile anti-balistique amélioré
 item.missile_incendiary.name=Missile incendiaire Tier1
 item.missile_cluster.name=Missile à sous munitions Tier1
 item.missile_buster.name=Bunker buster Tier1

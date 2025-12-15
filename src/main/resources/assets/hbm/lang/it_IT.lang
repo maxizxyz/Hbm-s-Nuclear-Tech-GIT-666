@@ -3466,6 +3466,7 @@ item.mirror_tool.name=Mirror Adjustment Tool
 item.mirror_tool.linked=Alignment position set!
 item.mirror_tool.desc=Right-click boiler to memorize the position.$Click on mirrors to turn them towards the boiler.
 item.missile_anti_ballistic.name=Anti-Ballistic Missile
+item.missile_abm2.name=Missile Anti-Balistico Migliorato
 item.missile_assembly.name=Small Missile Assembly
 item.missile_bhole.name=Black Hole Missile
 item.missile_burst.name=Spare Missile

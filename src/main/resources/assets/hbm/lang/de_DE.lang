@@ -2508,6 +2508,7 @@ item.mirror_tool.name=Spiegeleinstellungswerkzeug
 item.mirror_tool.linked=Position eingestellt!
 item.mirror_tool.desc=Rechtsclick merkt die Boilerposition.$Clicke auf Spiegel, um sie zum Boiler auszurichten.
 item.missile_anti_ballistic.name=Flugabwehrrakete
+item.missile_abm2.name=Verbesserte Flugabwehrrakete
 item.missile_assembly.name=Kleines Raketen-Bauset
 item.missile_bhole.name=Schwarzes-Loch-Rakete
 item.missile_burst.name=Spare Missile

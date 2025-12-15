@@ -27,6 +27,7 @@ import com.hbm.inventory.fluid.Fluids;
 import com.hbm.inventory.fluid.tank.FluidTank;
 import com.hbm.inventory.gui.GUILaunchPadLarge;
 import com.hbm.items.ModItems;
+import com.hbm.items.tool.ItemCoordinateBase;
 import com.hbm.items.weapon.ItemMissile;
 import com.hbm.items.weapon.ItemMissile.MissileFuel;
 import com.hbm.lib.Library;
@@ -34,6 +35,7 @@ import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.IGUIProvider;
 import com.hbm.tileentity.IRadarCommandReceiver;
 import com.hbm.tileentity.TileEntityMachineBase;
+import com.hbm.tileentity.machine.TileEntityMachineRadarNT;
 import com.hbm.util.TrackerUtil;
 import com.hbm.util.fauxpointtwelve.BlockPos;
 import com.hbm.util.fauxpointtwelve.DirPos;
@@ -50,6 +52,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -354,6 +357,14 @@ public abstract class TileEntityLaunchPadBase extends TileEntityMachineBase impl
 			return missile;
 		}
 		
+		if(slots[0].getItem() == ModItems.missile_abm2) {
+			EntityMissileABM2 missile = new EntityMissileABM2(worldObj);
+			missile.posX = xCoord + 0.5D;
+			missile.posY = yCoord + getLaunchOffset();
+			missile.posZ = zCoord + 0.5D;
+			return missile;
+		}
+		
 		return null;
 	}
 	
@@ -377,9 +388,33 @@ public abstract class TileEntityLaunchPadBase extends TileEntityMachineBase impl
 		if(!canLaunch()) return BombReturnCode.ERROR_MISSING_COMPONENT;
 		
 		boolean needsDesignator = needsDesignator(slots[0].getItem());
+		boolean isABM2 = slots[0] != null && slots[0].getItem() == ModItems.missile_abm2;
 
 		int targetX = xCoord;
 		int targetZ = zCoord;
+		
+		if(isABM2) {
+			boolean radarFound = false;
+			int searchRadius = 90;
+			
+			for(int dx = -searchRadius; dx <= searchRadius; dx++) {
+				for(int dy = -searchRadius; dy <= searchRadius; dy++) {
+					for(int dz = -searchRadius; dz <= searchRadius; dz++) {
+						TileEntity tile = worldObj.getTileEntity(xCoord + dx, yCoord + dy, zCoord + dz);
+						if(tile instanceof TileEntityMachineRadarNT) {
+							radarFound = true;
+							break;
+						}
+					}
+					if(radarFound) break;
+				}
+				if(radarFound) break;
+			}
+			
+			if(!radarFound) {
+				return BombReturnCode.ERROR_MISSING_COMPONENT;
+			}
+		}
 		
 		if(slots[1] != null && slots[1].getItem() instanceof IDesignatorItem) {
 			IDesignatorItem designator = (IDesignatorItem) slots[1].getItem();
@@ -393,7 +428,7 @@ public abstract class TileEntityLaunchPadBase extends TileEntityMachineBase impl
 			}
 			
 		} else {
-			if(needsDesignator) return BombReturnCode.ERROR_MISSING_COMPONENT;
+			if(needsDesignator && !isABM2) return BombReturnCode.ERROR_MISSING_COMPONENT;
 		}
 		
 		return this.launchToCoordinate(targetX, targetZ);
@@ -438,7 +473,7 @@ public abstract class TileEntityLaunchPadBase extends TileEntityMachineBase impl
 	}
 	
 	public boolean needsDesignator(Item item) {
-		return item != ModItems.missile_anti_ballistic;
+		return item != ModItems.missile_anti_ballistic && item != ModItems.missile_abm2;
 	}
 	
 	/** Full launch condition, checks if the item is launchable, fuel and power are present and any additional checks based on launch pad type */

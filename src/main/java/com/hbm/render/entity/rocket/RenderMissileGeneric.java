@@ -3,6 +3,7 @@ package com.hbm.render.entity.rocket;
 import org.lwjgl.opengl.GL11;
 
 import com.hbm.entity.missile.EntityMissileAntiBallistic;
+import com.hbm.entity.missile.EntityMissileABM2;
 import com.hbm.entity.missile.EntityMissileBaseNT;
 import com.hbm.entity.missile.EntityMissileStealth;
 import com.hbm.entity.missile.EntityMissileTier1.*;
@@ -37,6 +38,11 @@ public class RenderMissileGeneric extends Render {
 			bindTexture(ResourceManager.missileAA_tex);
 			GL11.glShadeModel(GL11.GL_SMOOTH);
 			ResourceManager.missileABM.renderAll();
+			GL11.glShadeModel(GL11.GL_FLAT);
+		} else if(entity instanceof EntityMissileABM2) {
+			bindTexture(ResourceManager.missileABM2_tex);
+			GL11.glShadeModel(GL11.GL_SMOOTH);
+			ResourceManager.missileABM2.renderAll();
 			GL11.glShadeModel(GL11.GL_FLAT);
 		} else if(entity instanceof EntityMissileStealth) {
 			bindTexture(ResourceManager.missileStealth_tex);

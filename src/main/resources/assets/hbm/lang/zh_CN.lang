@@ -3050,6 +3050,7 @@ item.mirror_tool.name=定日镜调整工具
 item.mirror_tool.linked=设置对齐位置!
 item.mirror_tool.desc=右键单击“太阳能锅炉”以记忆位置 $再单击“定日镜”可将其转向太阳能锅炉
 item.missile_anti_ballistic.name=反弹道导弹
+item.missile_abm2.name=增强型反弹道导弹
 item.missile_assembly.name=小型导弹[待装配]
 item.missile_bhole.name=黑洞导弹
 item.missile_burst.name=洲际导弹

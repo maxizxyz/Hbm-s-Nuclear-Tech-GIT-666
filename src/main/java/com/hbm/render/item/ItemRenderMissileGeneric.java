@@ -30,6 +30,7 @@ public class ItemRenderMissileGeneric implements IItemRenderer {
 		TYPE_TIER3,
 		TYPE_STEALTH,
 		TYPE_ABM,
+		TYPE_ABM2,
 		TYPE_NUCLEAR,
 		TYPE_ROBIN
 	}
@@ -73,6 +74,7 @@ public class ItemRenderMissileGeneric implements IItemRenderer {
 		case TYPE_TIER3: guiScale = 1.25D; guiOffset = 1D; break;
 		case TYPE_STEALTH: guiScale = 1.75D; guiOffset = 4.75D; break;
 		case TYPE_ABM: guiScale = 2.25D; guiOffset = 7D; break;
+		case TYPE_ABM2: guiScale = 2.25D; guiOffset = 7D; break;
 		case TYPE_NUCLEAR: guiScale = 1.375D; guiOffset = 1.5D; break;
 		case TYPE_ROBIN: guiScale = 1.25D; guiOffset = 2D; break;
 		}
@@ -147,6 +149,7 @@ public class ItemRenderMissileGeneric implements IItemRenderer {
 		renderers.put(new ComparableStack(ModItems.missile_buster), generateStandard(ResourceManager.missileV2_BU_tex, ResourceManager.missileV2));
 		renderers.put(new ComparableStack(ModItems.missile_decoy), generateStandard(ResourceManager.missileV2_decoy_tex, ResourceManager.missileV2));
 		renderers.put(new ComparableStack(ModItems.missile_anti_ballistic), generateStandard(ResourceManager.missileAA_tex, ResourceManager.missileABM));
+		renderers.put(new ComparableStack(ModItems.missile_abm2), generateStandard(ResourceManager.missileABM2_tex, ResourceManager.missileABM2));
 		
 		renderers.put(new ComparableStack(ModItems.missile_strong), generateLarge(ResourceManager.missileStrong_HE_tex, ResourceManager.missileStrong));
 		renderers.put(new ComparableStack(ModItems.missile_incendiary_strong), generateLarge(ResourceManager.missileStrong_IN_tex, ResourceManager.missileStrong));

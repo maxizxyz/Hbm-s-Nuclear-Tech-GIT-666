@@ -3390,6 +3390,7 @@ item.mirror_tool.reach=Mirror out of range! (max 100m)
 item.mirror_tool.angle=Mirror angle too shallow! (min 45°)
 item.mirror_tool.desc=Right-click boiler to memorize the position.$Click on mirrors to turn them towards the boiler.
 item.missile_anti_ballistic.name=Anti-Ballistic Missile
+item.missile_abm2.name=Enhanced Anti-Ballistic Missile
 item.missile_assembly.name=Small Missile Assembly
 item.missile_bhole.name=Black Hole Missile
 item.missile_burst.name=Spare Missile
