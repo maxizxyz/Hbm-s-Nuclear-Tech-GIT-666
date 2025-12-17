@@ -4959,6 +4959,12 @@ radar.redMode=Redstone Mode$On: Redstone output based on range$Off: Redstone out
 radar.showMap=Show Map
 radar.smartMode=Smart Mode$Redstone output ignores ascending missiles
 radar.toggleGui=Switch View
+radar.visibility=Visibility
+radar.effectiveRange=Effective Range
+radar.error.altitude=Error: Radar altitude not sufficient
+radar.warning.suboptimal=Warning: Suboptimal altitude detected
+radar.warning.currentVisibility=Current visibility: %s%% (Effective range: %s blocks)
+radar.warning.recommendedAltitude=Recommended altitude: %s+ blocks for full range
 
 radar.target.abm=Anti-Ballsitic Missile
 radar.target.custom10=Size 10 Custom Missile

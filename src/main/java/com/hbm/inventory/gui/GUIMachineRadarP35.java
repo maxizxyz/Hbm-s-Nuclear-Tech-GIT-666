@@ -136,6 +136,20 @@ public class GUIMachineRadarP35 extends GuiScreen {
                     mouseX, mouseY);
         }
 
+        if(com.hbm.tileentity.machine.TileEntityMachineRadarNT.radarHorizonEnabled) {
+            double multiplier = radar.calculateVisibilityMultiplier();
+            int effectiveRange = radar.calculateEffectiveRange();
+            int baseRange = radar.getRange();
+            
+            if(checkClick(mouseX, mouseY, 8, 8, 80, 8)) {
+                int visibility = (int)(multiplier * 100);
+                this.func_146283_a(Arrays.asList(
+                    I18nUtil.resolveKey("radar.visibility") + ": " + visibility + "%",
+                    I18nUtil.resolveKey("radar.effectiveRange") + ": " + effectiveRange + " / " + baseRange
+                ), mouseX, mouseY);
+            }
+        }
+
         if (checkClick(mouseX, mouseY, -10, 88, 8, 8))
             this.func_146283_a(Arrays.asList(I18nUtil.resolveKeyArray("radar.detectMissiles")), mouseX, mouseY);
         if (checkClick(mouseX, mouseY, -10, 128, 8, 8))
@@ -192,6 +206,23 @@ public class GUIMachineRadarP35 extends GuiScreen {
         if (radar.power > 0) {
             int i = (int) (radar.power * 200 / radar.maxPower);
             drawTexturedModalRect(guiLeft + 8, guiTop + 221, 0, 234, i, 16);
+        }
+
+        if(com.hbm.tileentity.machine.TileEntityMachineRadarNT.radarHorizonEnabled) {
+            double multiplier = radar.calculateVisibilityMultiplier();
+            int visibility = (int)(multiplier * 100);
+            String visText = visibility + "%";
+            int color = 0x00ff00;
+            if(multiplier < 1.0) {
+                if(multiplier >= 0.75) {
+                    color = 0xffff00;
+                } else if(multiplier >= 0.5) {
+                    color = 0xff8800;
+                } else {
+                    color = 0xff0000;
+                }
+            }
+            this.fontRendererObj.drawString(visText, guiLeft + 10, guiTop + 9, color);
         }
 
         drawTexturedModalRect(guiLeft - 10, guiTop + 88, 238, 4, 8, 8);

@@ -86,7 +86,7 @@ public class TileEntityMachineRadarP35 extends TileEntityMachineRadarNT {
         this.scanShells = false;
         this.scanPlayers = false;
 
-        int scan = this.getRange();
+        int scan = calculateEffectiveRange();
 
         api.hbm.entity.IRadarDetectableNT.RadarScanParams params = new api.hbm.entity.IRadarDetectableNT.RadarScanParams(
                 true, false, false, false);

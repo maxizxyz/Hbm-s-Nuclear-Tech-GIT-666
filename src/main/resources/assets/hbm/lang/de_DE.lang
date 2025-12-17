@@ -3783,6 +3783,12 @@ radar.redMode=Redstone Mode$Ein: Redstonesignal basiert auf Nähe$Aus: Redstones
 radar.showMap=Karte anzeigen
 radar.smartMode=Smart Mode$Redstonesignal ignoriert aufsteigende Raketen
 radar.toggleGui=Ansicht umschalten
+radar.visibility=Sichtbarkeit
+radar.effectiveRange=Effektive Reichweite
+radar.error.altitude=Fehler: Radarhöhe nicht ausreichend
+radar.warning.suboptimal=Warnung: Suboptimale Höhe erkannt
+radar.warning.currentVisibility=Aktuelle Sichtbarkeit: %s%% (Effektive Reichweite: %s Blöcke)
+radar.warning.recommendedAltitude=Empfohlene Höhe: %s+ Blöcke für volle Reichweite
 
 rbmk.heat=Komponententemperatur: %s
 rbmk.boiler.water=Wasser: %s / %s

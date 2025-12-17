@@ -83,6 +83,20 @@ public class GUIMachineRadarNT extends GuiScreen {
 
 		if(checkClick(mouseX, mouseY, 8, 221, 200, 7)) this.func_146283_a(Arrays.asList(BobMathUtil.getShortNumber(radar.power) + "/" + BobMathUtil.getShortNumber(radar.maxPower) + "HE"), mouseX, mouseY);
 		
+		if(TileEntityMachineRadarNT.radarHorizonEnabled) {
+			double multiplier = radar.calculateVisibilityMultiplier();
+			int effectiveRange = radar.calculateEffectiveRange();
+			int baseRange = radar.getRange();
+			
+			if(checkClick(mouseX, mouseY, 8, 8, 80, 8)) {
+				int visibility = (int)(multiplier * 100);
+				this.func_146283_a(Arrays.asList(
+					I18nUtil.resolveKey("radar.visibility") + ": " + visibility + "%",
+					I18nUtil.resolveKey("radar.effectiveRange") + ": " + effectiveRange + " / " + baseRange
+				), mouseX, mouseY);
+			}
+		}
+		
 		if(checkClick(mouseX, mouseY, -10, 88, 8, 8)) this.func_146283_a(Arrays.asList(I18nUtil.resolveKeyArray("radar.detectMissiles")), mouseX, mouseY);
 		if(checkClick(mouseX, mouseY, -10, 98, 8, 8)) this.func_146283_a(Arrays.asList(I18nUtil.resolveKeyArray("radar.detectShells")), mouseX, mouseY);
 		if(checkClick(mouseX, mouseY, -10, 108, 8, 8)) this.func_146283_a(Arrays.asList(I18nUtil.resolveKeyArray("radar.detectPlayers")), mouseX, mouseY);
@@ -123,6 +137,23 @@ public class GUIMachineRadarNT extends GuiScreen {
 		if(radar.power > 0) {
 			int i = (int) (radar.power * 200 / radar.maxPower);
 			drawTexturedModalRect(guiLeft + 8, guiTop + 221, 0, 234, i, 16);
+		}
+		
+		if(TileEntityMachineRadarNT.radarHorizonEnabled) {
+			double multiplier = radar.calculateVisibilityMultiplier();
+			int visibility = (int)(multiplier * 100);
+			String visText = visibility + "%";
+			int color = 0x00ff00;
+			if(multiplier < 1.0) {
+				if(multiplier >= 0.75) {
+					color = 0xffff00;
+				} else if(multiplier >= 0.5) {
+					color = 0xff8800;
+				} else {
+					color = 0xff0000;
+				}
+			}
+			this.drawString(this.fontRendererObj, visText, guiLeft + 10, guiTop + 9, color);
 		}
 		
 		if(radar.scanMissiles ^ (radar.jammed && radar.getWorldObj().rand.nextBoolean())) drawTexturedModalRect(guiLeft - 10, guiTop + 88, 238, 4, 8, 8);

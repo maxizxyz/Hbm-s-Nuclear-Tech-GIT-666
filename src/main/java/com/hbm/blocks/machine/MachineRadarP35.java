@@ -5,6 +5,7 @@ import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.TileEntityProxyCombo;
 import com.hbm.tileentity.machine.TileEntityMachineRadarNT;
 import com.hbm.tileentity.machine.TileEntityMachineRadarP35;
+import com.hbm.util.i18n.I18nUtil;
 
 import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import net.minecraft.block.material.Material;
@@ -35,8 +36,26 @@ public class MachineRadarP35 extends BlockDummyable {
 		
 		if(y < TileEntityMachineRadarNT.radarAltitude) {
 			if(world.isRemote)
-				player.addChatMessage(new ChatComponentText("[P35 Radar] Error: Radar altitude not sufficient.").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+				player.addChatMessage(new ChatComponentText(I18nUtil.resolveKey("radar.error.altitude")).setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
 			return true;
+		}
+		
+		if(world.isRemote && TileEntityMachineRadarNT.radarHorizonEnabled) {
+			int[] pos = this.findCore(world, x, y, z);
+			if(pos != null) {
+				TileEntity tile = world.getTileEntity(pos[0], pos[1], pos[2]);
+				if(tile instanceof TileEntityMachineRadarNT) {
+					TileEntityMachineRadarNT radar = (TileEntityMachineRadarNT) tile;
+					double multiplier = radar.calculateVisibilityMultiplier();
+					if(multiplier < 0.4) {
+						int visibility = (int)(multiplier * 100);
+						int effectiveRange = radar.calculateEffectiveRange();
+						player.addChatMessage(new ChatComponentText(I18nUtil.resolveKey("radar.warning.suboptimal")).setChatStyle(new ChatStyle().setColor(EnumChatFormatting.YELLOW)));
+						player.addChatMessage(new ChatComponentText(I18nUtil.resolveKey("radar.warning.currentVisibility", visibility, effectiveRange)).setChatStyle(new ChatStyle().setColor(EnumChatFormatting.YELLOW)));
+						player.addChatMessage(new ChatComponentText(I18nUtil.resolveKey("radar.warning.recommendedAltitude", TileEntityMachineRadarNT.radarFullVisibilityAltitude)).setChatStyle(new ChatStyle().setColor(EnumChatFormatting.YELLOW)));
+					}
+				}
+			}
 		}
 		
 		if(world.isRemote && !player.isSneaking()) {

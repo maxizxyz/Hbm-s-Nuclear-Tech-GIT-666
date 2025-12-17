@@ -91,6 +91,11 @@ public class TileEntityMachineRadarNT extends TileEntityMachineBase implements I
 	public static int radarAltitude = 55;
 	public static int chunkLoadCap = 10;
 	public static boolean generateChunks = false;
+	
+	public static boolean radarHorizonEnabled = true;
+	public static int radarFullVisibilityAltitude = 200;
+	public static int radarReducedVisibilityAltitude = 140;
+	public static int radarPoorVisibilityAltitude = 80;
 
 	public byte[] map = new byte[40_000];
 	public boolean clearFlag = false;
@@ -111,6 +116,10 @@ public class TileEntityMachineRadarNT extends TileEntityMachineBase implements I
 		radarAltitude = IConfigurableMachine.grab(obj, "I:radarAltitude", radarAltitude);
 		chunkLoadCap = IConfigurableMachine.grab(obj, "I:chunkLoadCap", chunkLoadCap);
 		generateChunks = IConfigurableMachine.grab(obj, "B:generateChunks", generateChunks);
+		radarHorizonEnabled = IConfigurableMachine.grab(obj, "B:radarHorizonEnabled", radarHorizonEnabled);
+		radarFullVisibilityAltitude = IConfigurableMachine.grab(obj, "I:radarFullVisibilityAltitude", radarFullVisibilityAltitude);
+		radarReducedVisibilityAltitude = IConfigurableMachine.grab(obj, "I:radarReducedVisibilityAltitude", radarReducedVisibilityAltitude);
+		radarPoorVisibilityAltitude = IConfigurableMachine.grab(obj, "I:radarPoorVisibilityAltitude", radarPoorVisibilityAltitude);
 	}
 
 	@Override
@@ -121,6 +130,10 @@ public class TileEntityMachineRadarNT extends TileEntityMachineBase implements I
 		writer.name("I:radarBuffer").value(radarBuffer);
 		writer.name("I:radarAltitude").value(radarAltitude);
 		writer.name("B:generateChunks").value(generateChunks);
+		writer.name("B:radarHorizonEnabled").value(radarHorizonEnabled);
+		writer.name("I:radarFullVisibilityAltitude").value(radarFullVisibilityAltitude);
+		writer.name("I:radarReducedVisibilityAltitude").value(radarReducedVisibilityAltitude);
+		writer.name("I:radarPoorVisibilityAltitude").value(radarPoorVisibilityAltitude);
 	}
 
 	public TileEntityMachineRadarNT() {
@@ -338,7 +351,7 @@ public class TileEntityMachineRadarNT extends TileEntityMachineBase implements I
 		}
 		this.power -= consumption;
 
-		int scan = this.getRange();
+		int scan = calculateEffectiveRange();
 
 		RadarScanParams params = new RadarScanParams(this.scanMissiles, this.scanShells, this.scanPlayers, this.smartMode);
 
@@ -364,6 +377,47 @@ public class TileEntityMachineRadarNT extends TileEntityMachineBase implements I
 		}
 	}
 
+	public int calculateEffectiveRange() {
+		int baseRange = this.getRange();
+		if(!radarHorizonEnabled) {
+			return baseRange;
+		}
+		double multiplier = calculateVisibilityMultiplier();
+		return (int)(baseRange * multiplier);
+	}
+	
+	public double calculateVisibilityMultiplier() {
+		int altitude = this.yCoord;
+		
+		if(altitude >= radarFullVisibilityAltitude) {
+			return 1.0;
+		}
+		
+		if(altitude < radarAltitude) {
+			return 0.0;
+		}
+		
+		if(altitude >= radarReducedVisibilityAltitude) {
+			double range = radarFullVisibilityAltitude - radarReducedVisibilityAltitude;
+			double offset = altitude - radarReducedVisibilityAltitude;
+			return 0.75 + (offset / range) * 0.25;
+		}
+		
+		if(altitude >= radarPoorVisibilityAltitude) {
+			double range = radarReducedVisibilityAltitude - radarPoorVisibilityAltitude;
+			double offset = altitude - radarPoorVisibilityAltitude;
+			return 0.5 + (offset / range) * 0.25;
+		}
+		
+		if(altitude >= radarAltitude) {
+			double range = radarPoorVisibilityAltitude - radarAltitude;
+			double offset = altitude - radarAltitude;
+			return 0.25 * (offset / range);
+		}
+		
+		return 0.0;
+	}
+	
 	public int getRedPower() {
 
 		if(!entries.isEmpty()) {
