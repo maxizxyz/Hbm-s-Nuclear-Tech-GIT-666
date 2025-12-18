@@ -3715,6 +3715,7 @@ item.missile_soyuz_lander.name=Орбитальный Модуль
 item.missile_soyuz_lander.desc=А также паршивый посадочный модуль!
 item.missile_stealth.name=Стелс-ракета
 item.missile_strong.name=Мощная фугасная ракета
+item.missile_r500cm.name=Крылатая ракета Р-500
 item.missile_taint.name=Зараженная ракета
 item.missile.tier.tier0=Уровень 0
 item.missile.tier.tier1=Уровень 1

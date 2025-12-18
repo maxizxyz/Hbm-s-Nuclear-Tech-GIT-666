@@ -3084,6 +3084,7 @@ item.missile_soyuz_lander.name=联盟号轨道舱
 item.missile_soyuz_lander.desc=劣质着陆器！
 item.missile_stealth.name=隐身导弹
 item.missile_strong.name=强化型高爆导弹
+item.missile_r500cm.name=R-500巡航导弹
 item.missile_taint.name=污染导弹
 item.missile_volcano.name=构造导弹
 item.missile_volcano.desc=利用核爆的威力，我们可以召唤一座火山！

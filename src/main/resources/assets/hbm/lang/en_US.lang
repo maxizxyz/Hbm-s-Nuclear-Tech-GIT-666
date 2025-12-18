@@ -3466,6 +3466,7 @@ item.missile_soyuz_lander.name=Orbital Module
 item.missile_soyuz_lander.desc=Doubles as a crappy lander!
 item.missile_stealth.name=Stealth Missile
 item.missile_strong.name=Strong HE Missile
+item.missile_r500cm.name=R-500 Cruise Missile
 item.missile_taint.name=Taint-Tipped Missile
 item.missile.tier.tier0=Tier 0
 item.missile.tier.tier1=Tier 1

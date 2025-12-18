@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.hbm.entity.missile.EntityMissileBaseNT;
 import com.hbm.entity.missile.EntityMissileTier2.*;
+import com.hbm.entity.missile.EntityMissileR500CM;
 import com.hbm.main.ResourceManager;
 
 import net.minecraft.client.renderer.entity.Render;
@@ -36,9 +37,16 @@ public class RenderMissileStrong extends Render {
 		if(entity instanceof EntityMissileClusterStrong) bindTexture(ResourceManager.missileStrong_CL_tex);
 		if(entity instanceof EntityMissileBusterStrong) bindTexture(ResourceManager.missileStrong_BU_tex);
 		if(entity instanceof EntityMissileEMPStrong) bindTexture(ResourceManager.missileStrong_EMP_tex);
-		GL11.glShadeModel(GL11.GL_SMOOTH);
-		ResourceManager.missileStrong.renderAll();
-		GL11.glShadeModel(GL11.GL_FLAT);
+		if(entity instanceof EntityMissileR500CM) {
+			bindTexture(ResourceManager.missileR500CM_tex);
+			GL11.glShadeModel(GL11.GL_SMOOTH);
+			ResourceManager.missileR500CM.renderAll();
+			GL11.glShadeModel(GL11.GL_FLAT);
+		} else {
+			GL11.glShadeModel(GL11.GL_SMOOTH);
+			ResourceManager.missileStrong.renderAll();
+			GL11.glShadeModel(GL11.GL_FLAT);
+		}
 		GL11.glPopMatrix();
 	}
 

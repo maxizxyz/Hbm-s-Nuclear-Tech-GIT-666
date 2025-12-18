@@ -3344,6 +3344,7 @@ item.missile_soyuz_lander.name=Орбітальний модуль
 item.missile_soyuz_lander.desc=Також є жахливим посадковим модулем!
 item.missile_stealth.name=Ракета-невидимка
 item.missile_strong.name=Потужна фугасна ракета
+item.missile_r500cm.name=Крилата ракета Р-500
 item.missile_taint.name=Ракета з біологічною зброєю
 item.missile_volcano.name=Тектонічна ракета
 item.missile_volcano.desc=Використовуючи силу ядерного вибуху, ми можемо викликати вулкан!

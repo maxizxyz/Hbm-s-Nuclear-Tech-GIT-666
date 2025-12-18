@@ -3500,6 +3500,7 @@ item.missile_soyuz_lander.name=Orbital Module
 item.missile_soyuz_lander.desc=Doubles as a crappy lander!
 item.missile_stealth.name=Stealth Missile
 item.missile_strong.name=Strong HE Missile
+item.missile_r500cm.name=Missile da crociera R-500
 item.missile_taint.name=Taint-Tipped Missile
 item.missile_volcano.name=Tectonic Missile
 item.missile_volcano.desc=Using the power of nuclear explosives, we can summon a volcano!

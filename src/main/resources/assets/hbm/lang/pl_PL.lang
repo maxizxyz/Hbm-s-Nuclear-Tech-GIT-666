@@ -2996,6 +2996,7 @@ item.missile_nuclear.name=Nuclear Missile
 item.missile_nuclear_cluster.name=Thermonuclear Missile
 item.missile_rain.name=Bomblet Rain
 item.missile_schrabidium.name=Schrabidium Missile
+item.missile_r500cm.name=Pocisk manewrujący R-500
 item.missile_shuttle.name=Reliant Robin Space Shuttle
 item.missile_skin_camo.name=Missile Skin: Camo
 item.missile_skin_color.desc=I can't find my missile anymore!
